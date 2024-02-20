@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { Flex } from "../Flex/Flex";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,7 +9,6 @@ import { List } from "../List/List";
 import { Text } from "../Text/Text";
 import classNames from "classnames";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 const links = [
   {
@@ -24,6 +25,10 @@ export const Navbar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    setShowMobileMenu(false);
+  }, [pathname]);
+
   return (
     <>
       <aside
@@ -34,7 +39,7 @@ export const Navbar = () => {
         )}
       >
         <List className="w-full" alignItems="items-center">
-          <Link href="/donation">
+          <Link href="/donations">
             <Image
               src="/nav-icons/trend-up.svg"
               alt="donation-logo"
