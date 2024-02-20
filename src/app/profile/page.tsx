@@ -47,7 +47,12 @@ export default function ProfilePage() {
     }
   };
 
-  const handleDownloadQrCode = () => {};
+  const handleDownloadQrCode = () => {
+    const download = document.createElement("a");
+    download.href = qrCode;
+    download.download = "politician-qr";
+    download.click();
+  };
 
   return (
     <main className="flex flex-col gap-6 px-4 py-5 sm:p-12">
