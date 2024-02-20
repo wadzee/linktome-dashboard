@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-primary-dark;
+    @apply text-light-tan;
+  }
+  main {
+    @apply sm:ml-[220px];
+    @apply w-full;
+    @apply mt-[56px];
+    @apply sm:mt-0;
+  }
+  nav {
+    @apply bg-primary-dark;
+    @apply z-50;
+  }
+  button {
+    @apply h-full;
+    @apply font-semibold;
+    @apply hover:opacity-70;
+  }
+  button:disabled {
+    @apply cursor-not-allowed;
+    @apply opacity-50;
+  }
+  a {
+    @apply underline;
+    @apply no-underline;
+  }
+  u {
+    @apply decoration-4;
+    @apply underline-offset-8;
+    @apply sm:decoration-[6px];
+    @apply sm:underline-offset-8;
+    @apply decoration-secondary-dark;
+  }
+  h1 {
+    @apply text-4xl;
+    @apply leading-[45px];
+    @apply sm:text-[60px];
+    @apply sm:leading-[75px];
+  }
+
+  h2 {
+    @apply text-3xl;
+    @apply sm:text-[42px];
+    @apply sm:leading-[52.5px];
+  }
+
+  details {
+    @apply py-6;
+    @apply border-dotted;
+    @apply border-b;
+    @apply border-brand-gray;
+  }
+
+  summary {
+    @apply font-bold;
+  }
+
+  summary::after {
+    margin-left: 1ch;
+    display: inline-block;
+    content: "+";
+    transform: scale(1.5);
+    transition: 0.2s;
+    float: right;
+    @apply text-yellow;
+  }
+
+  details[open] > summary::after {
+    transform: scale(1.5) rotate(-45deg);
+  }
+
+  details > summary {
+    list-style: none;
+  }
+
+  details > summary::marker,
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  input {
+    @apply bg-transparent;
+    @apply w-full;
+    @apply focus:outline-none;
+  }
+  input:disabled {
+    @apply opacity-50;
+    @apply cursor-not-allowed;
+  }
+
+  select {
+    @apply w-full;
+    @apply bg-transparent;
+    @apply focus:outline-none;
+  }
+
+  select option {
+    @apply bg-transparent;
+    @apply mt-12;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .button-primary {
+    @apply text-navy;
+    @apply bg-secondary-dark;
+    @apply border;
+    @apply border-transparent;
+  }
+
+  .button-secondary {
+    @apply text-light-navy;
+    @apply border;
+    @apply border-primary-light;
+  }
+
+  .textfield {
+    position: relative;
+    @apply py-4 px-5;
+    @apply rounded-2xl;
+    @apply border-dotted;
+    @apply border;
+    @apply border-brand-gray;
+  }
+
+  .active-link {
+    @apply underline;
+    @apply decoration-2;
+    @apply underline-offset-4;
+    @apply decoration-secondary-dark;
+  }
+}
