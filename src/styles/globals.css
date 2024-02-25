@@ -9,6 +9,7 @@
   }
   main {
     @apply sm:ml-[220px];
+    @apply h-screen;
     @apply w-full;
     @apply mt-[56px];
     @apply sm:mt-0;
@@ -48,6 +49,11 @@
     @apply text-3xl;
     @apply sm:text-[42px];
     @apply sm:leading-[52.5px];
+  }
+
+  h3 {
+    @apply text-[32px];
+    @apply leading-10;
   }
 
   details {

@@ -9,7 +9,7 @@ import { Transaction } from "src/constants/transaction";
 
 export default function DonationPage() {
   return (
-    <main className="flex flex-col gap-6 px-4 py-5 sm:p-12">
+    <>
       <h2>Hi, John</h2>
       <Grid3Cols className="gap-6">
         <Card label="Funds raised">
@@ -53,6 +53,6 @@ export default function DonationPage() {
           </Flex>
         </List>
       ))}
-    </main>
+    </>
   );
 }

@@ -1,7 +1,9 @@
 "use client";
 
+import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
+import { Button } from "../Button/Button";
 import { Flex } from "../Flex/Flex";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,10 +16,26 @@ const links = [
   {
     label: "Donations",
     link: "/donations",
+    image: {
+      src: "/nav-icons/trend-up.svg",
+      alt: "donation-logo",
+    },
   },
   {
     label: "Profile",
     link: "/profile",
+    image: {
+      src: "/nav-icons/profile.svg",
+      alt: "profile-logo",
+    },
+  },
+  {
+    label: "Account",
+    link: "/account",
+    image: {
+      src: "/nav-icons/account.svg",
+      alt: "account-logo",
+    },
   },
 ];
 
@@ -29,6 +47,10 @@ export const Navbar = () => {
     setShowMobileMenu(false);
   }, [pathname]);
 
+  if (pathname === "/login") {
+    return null;
+  }
+
   return (
     <>
       <aside
@@ -39,34 +61,17 @@ export const Navbar = () => {
         )}
       >
         <List className="w-full" alignItems="items-center">
-          <Link href="/donations">
-            <Image
-              src="/nav-icons/trend-up.svg"
-              alt="donation-logo"
-              height={24}
-              width={24}
-            />
-          </Link>
-          <Link href="/profile">
-            <Image
-              src="/nav-icons/account.svg"
-              alt="linktome-logo"
-              height={24}
-              width={24}
-            />
-          </Link>
-          {/* <Link href="/account">
-            <Image
-              src="/nav-icons/setting.svg"
-              alt="linktome-logo"
-              height={24}
-              width={24}
-            />
-          </Link> */}
+          {links.map(({ image, link }, idx) => {
+            return (
+              <Link href={link} key={idx}>
+                <Image src={image.src} alt={image.alt} height={24} width={24} />
+              </Link>
+            );
+          })}
           <button>
             <Image
               src="/nav-icons/email.svg"
-              alt="linktome-logo"
+              alt="email-logo"
               height={24}
               width={24}
             />
@@ -111,17 +116,22 @@ export const Navbar = () => {
           </button>
         </Flex>
 
-        <List className="overflow-hidden hidden sm:flex">
-          {links.map(({ label, link }, idx) => {
-            const isActive = pathname.includes(link);
-            return (
-              <Link href={link} key={idx}>
-                <Text className={classNames(isActive && "active-link")}>
-                  {label}
-                </Text>
-              </Link>
-            );
-          })}
+        <List justifyContent="justify-between" className="h-full">
+          <List className="overflow-hidden hidden sm:flex">
+            {links.map(({ label, link }, idx) => {
+              const isActive = pathname.includes(link);
+              return (
+                <Link href={link} key={idx}>
+                  <Text className={classNames(isActive && "active-link")}>
+                    {label}
+                  </Text>
+                </Link>
+              );
+            })}
+          </List>
+          <List>
+            <Button onClick={() => signOut()}>Logout</Button>
+          </List>
         </List>
       </nav>
     </>

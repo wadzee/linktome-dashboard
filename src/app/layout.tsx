@@ -1,10 +1,11 @@
 import "src/styles/globals.css";
 
 import { Flex } from "src/components/Flex/Flex";
-import { Footer } from "src/components/Footer/Footer";
 import type { Metadata } from "next";
 import { Navbar } from "src/components/Navbar/Navbar";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import SessionProvider from "src/context/SessionProvider";
+import { getServerSession } from "next-auth";
 
 const inter = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -13,18 +14,24 @@ export const metadata: Metadata = {
   description: "Streamlining donations",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession();
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Flex alignItems="items-start" gap="gap-0">
-          <Navbar />
-          {children}
-        </Flex>
+        <SessionProvider session={session}>
+          <Flex alignItems="items-start" gap="gap-0">
+            <Navbar />
+            <main className="flex flex-col gap-6 px-4 py-5 sm:p-12">
+              {children}
+            </main>
+          </Flex>
+        </SessionProvider>
       </body>
     </html>
   );
