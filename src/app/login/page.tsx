@@ -3,6 +3,8 @@
 import { signIn, useSession } from "next-auth/react";
 
 import { Button } from "src/components/Button/Button";
+import Image from "next/image";
+import Link from "next/link";
 import { SignInFormProps } from "src/services/auth/signIn";
 import { Text } from "src/components/Text/Text";
 import { TextField } from "src/components/Inputs/TextField";
@@ -34,39 +36,53 @@ export default function LoginPage() {
   };
 
   return (
-    <section
-      className={classNames(
-        "sm:-ml-[220px] -mt-[56px] sm:mt-0",
-        "h-full flex flex-col justify-center"
-      )}
-    >
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-6 max-w-[600px] mx-auto justify-center w-full"
+    <div className="-mt-[56px] sm:mt-0 sm:-ml-[220px] h-full">
+      <nav>
+        <Link href="/">
+          <Image
+            src="/linktome-logo-light.svg"
+            alt="linktome-logo"
+            height={32}
+            width={96}
+          />
+        </Link>
+      </nav>
+      <section
+        className={classNames(
+          "sm:-ml-[220px] -mt-[56px] sm:mt-0",
+          "h-full flex flex-col justify-center"
+        )}
       >
-        <h3>Login</h3>
-        <Text>Enter your account details to login</Text>
-        <TextField<SignInFormProps>
-          label="Email"
-          name="username"
-          register={register}
-          errors={errors.username}
-        />
-        <TextField<SignInFormProps>
-          label="Password"
-          name="password"
-          type="password"
-          register={register}
-          errors={errors.password}
-        />
-        <Button
-          isLoading={isSubmitting}
-          type="submit"
-          className="px-6 w-[160px] rounded-full "
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-6 max-w-[600px] mx-auto justify-center w-full"
         >
-          Login
-        </Button>
-      </form>
-    </section>
+          <h3>Login</h3>
+          <Text className="text-light-navy">
+            Enter your account details to login
+          </Text>
+          <TextField<SignInFormProps>
+            label="Email"
+            name="username"
+            register={register}
+            errors={errors.username}
+          />
+          <TextField<SignInFormProps>
+            label="Password"
+            name="password"
+            type="password"
+            register={register}
+            errors={errors.password}
+          />
+          <Button
+            isLoading={isSubmitting}
+            type="submit"
+            className="px-6 w-[160px] rounded-full "
+          >
+            Login
+          </Button>
+        </form>
+      </section>
+    </div>
   );
 }
