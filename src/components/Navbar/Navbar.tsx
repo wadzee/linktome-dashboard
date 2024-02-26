@@ -76,7 +76,7 @@ export const Navbar = () => {
               width={24}
             />
           </button>
-          <button>
+          <button onClick={() => signOut()}>
             <Image
               src="/nav-icons/logout.svg"
               alt="logout-logo"
@@ -116,7 +116,10 @@ export const Navbar = () => {
           </button>
         </Flex>
 
-        <List justifyContent="justify-between" className="h-full">
+        <List
+          justifyContent="justify-between"
+          className="hidden h-full sm:flex"
+        >
           <List className="overflow-hidden hidden sm:flex">
             {links.map(({ label, link }, idx) => {
               const isActive = pathname.includes(link);
@@ -129,7 +132,7 @@ export const Navbar = () => {
               );
             })}
           </List>
-          <List>
+          <List className="overflow-hidden hidden sm:flex">
             <Button onClick={() => signOut()}>Logout</Button>
           </List>
         </List>
