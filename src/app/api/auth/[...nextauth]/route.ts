@@ -1,6 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
-import { SignInUser } from "src/services/auth/signIn";
+import { signInUser } from "src/services/auth/signIn";
 
 const handler = NextAuth({
   pages: {
@@ -22,10 +22,12 @@ const handler = NextAuth({
         };
 
         try {
-          const response = await SignInUser(params);
+          const response = await signInUser(params);
           const user = {
             id: response.username,
+            idToken: response.idToken,
             accessToken: response.accessToken,
+            attributes: response.attributes,
           };
           return user;
         } catch (error) {

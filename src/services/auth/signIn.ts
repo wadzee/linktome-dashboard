@@ -7,11 +7,16 @@ export interface SignInFormProps {
 
 interface SignInResponse {
   username: string;
+  idToken: string;
   accessToken: string;
   challenge: string;
+  attributes: Array<{
+    Name: string;
+    Value: string;
+  }>;
 }
 
-export const SignInUser = async (props: SignInFormProps) => {
+export async function signInUser(props: SignInFormProps) {
   const axiosInstance = axios.create({
     baseURL: "https://api.linktome.xyz",
   });
@@ -22,4 +27,4 @@ export const SignInUser = async (props: SignInFormProps) => {
   );
 
   return data;
-};
+}

@@ -4,7 +4,7 @@ import {
   TransactionsResponse,
   getUserTransactions,
 } from "src/services/stripe/getTransactions";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Card } from "src/components/Card/Card";
 import { ConvertEpochToDate } from "src/utils";
@@ -13,9 +13,11 @@ import { Grid3Cols } from "src/components/Grid/Grid3Cols";
 import Image from "next/image";
 import { List } from "src/components/List/List";
 import { Text } from "src/components/Text/Text";
+import { useSession } from "next-auth/react";
 
 export default function DonationPage() {
   const [transactions, setTransactions] = useState<TransactionsResponse>();
+  const { data: sessionData } = useSession();
 
   const getTransactions = useCallback(async () => {
     const data = await getUserTransactions();
@@ -28,16 +30,22 @@ export default function DonationPage() {
     getTransactions();
   }, [getTransactions]);
 
+  const username = useMemo(() => {
+    return sessionData?.user?.attributes?.find(
+      ({ Name }) => Name === "given_name"
+    )?.Value;
+  }, [sessionData]);
+
   return (
     <>
-      <h2>Hi, John</h2>
+      <h2>Hi, {username}</h2>
       <Grid3Cols className="gap-6">
         <Card label="Funds raised">
           <h2>${transactions?.fundRaised || 0}</h2>
         </Card>
         <Card label="Next payment">
           <Flex>
-            <h2>$250.00</h2>
+            <h2>{transactions?.balance}</h2>
             <List gap="gap-0">
               <Flex gap="gap-2">
                 <Image

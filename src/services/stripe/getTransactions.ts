@@ -15,6 +15,8 @@ export interface TransactionObject {
 
 export interface TransactionsResponse {
   data: TransactionObject[];
+  balance: number;
+  feesTotal: number;
   totalDonations: number;
   fundRaised: number;
 }
@@ -24,7 +26,7 @@ export async function getUserTransactions(props?: TransactionProps) {
   console.log("session", session);
   const axiosInstance = axios.create({
     baseURL: "https://api.linktome.xyz",
-    headers: { Authorization: `Bearer ${session?.user.accessToken}` },
+    headers: { Authorization: `Bearer ${session?.user?.idToken}` },
   });
 
   try {
