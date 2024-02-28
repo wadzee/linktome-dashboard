@@ -11,7 +11,7 @@ interface SignInResponse {
   accessToken: string;
   challenge: string;
   attributes: Array<{
-    Name: string;
+    Name: "given_name" | "custom:isAdmin" | "custom:stripeId" | "sub";
     Value: string;
   }>;
 }

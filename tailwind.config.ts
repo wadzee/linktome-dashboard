@@ -23,6 +23,8 @@ const config: Config = {
         "secondary-light": "#002FFF",
         "brand-gray": "#B4B4C880",
         "card-gray": "rgba(255, 255, 255, 0.05)",
+        "light-navy": "#B4B4C8",
+        green: "rgba(100, 240, 19, 1)",
       },
     },
   },

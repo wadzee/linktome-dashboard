@@ -29,14 +29,14 @@ const links = [
       alt: "profile-logo",
     },
   },
-  {
-    label: "Account",
-    link: "/account",
-    image: {
-      src: "/nav-icons/account.svg",
-      alt: "account-logo",
-    },
-  },
+  // {
+  //   label: "Account",
+  //   link: "/account",
+  //   image: {
+  //     src: "/nav-icons/account.svg",
+  //     alt: "account-logo",
+  //   },
+  // },
 ];
 
 export const Navbar = () => {
@@ -47,7 +47,7 @@ export const Navbar = () => {
     setShowMobileMenu(false);
   }, [pathname]);
 
-  if (pathname === "/login") {
+  if (pathname === "/login" || pathname === "/welcome") {
     return null;
   }
 

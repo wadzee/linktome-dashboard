@@ -23,7 +23,10 @@ export interface TransactionsResponse {
 
 export async function getUserTransactions(props?: TransactionProps) {
   const session = await getSession();
-  console.log("session", session);
+  const stripeId = session?.user?.attributes.find(
+    ({ Name }) => Name === "custom:stripeId"
+  )?.Value;
+
   const axiosInstance = axios.create({
     baseURL: "https://api.linktome.xyz",
     headers: { Authorization: `Bearer ${session?.user?.idToken}` },
@@ -33,7 +36,7 @@ export async function getUserTransactions(props?: TransactionProps) {
     const {
       data: { ...rest },
     } = await axiosInstance.post<TransactionsResponse>(
-      "/user/acct_1Oml0xQeithcVJLi/transactions",
+      `/user/${stripeId}/transactions`,
       props
     );
 

@@ -1,6 +1,12 @@
 "use client";
 
-import { createElement, useEffect, useState } from "react";
+import {
+  createElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import { Button } from "src/components/Button/Button";
 import { Card } from "src/components/Card/Card";
@@ -11,19 +17,24 @@ import Link from "next/link";
 import { List } from "src/components/List/List";
 import QRCode from "qrcode";
 import { Text } from "src/components/Text/Text";
+import { useSession } from "next-auth/react";
 
 export default function ProfilePage() {
+  const { data } = useSession();
   const [linkCopied, setLinkCopied] = useState(false);
   const [qrCodeDownloaded, setQRCodeDownloaded] = useState(false);
   const [qrCode, setQrCode] = useState<string>("");
 
-  useEffect(() => {
-    generateQrCode();
-  }, []);
+  const userStripeId = useMemo(
+    () =>
+      data?.user?.attributes?.find(({ Name }) => Name === "custom:stripeId")
+        ?.Value,
+    [data]
+  );
 
-  const generateQrCode = () => {
+  const generateQrCode = useCallback(() => {
     QRCode.toDataURL(
-      "staging.linktome.xyz/politician/acct_1OgAOzEZcwACFEpu",
+      `staging.linktome.xyz/politician/${userStripeId}`,
       {
         width: 512,
       },
@@ -34,33 +45,29 @@ export default function ProfilePage() {
         setQrCode(url);
       }
     );
-  };
+  }, [userStripeId]);
 
-  const handleCopyURL = async () => {
+  useEffect(() => {
+    generateQrCode();
+  }, [generateQrCode]);
+
+  const handleCopyURL = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(
-        "staging.linktome.xyz/politician/acct_1OgAOzEZcwACFEpu"
+        `staging.linktome.xyz/politician/${userStripeId}`
       );
       setLinkCopied(true);
     } catch (err) {
       console.error("Failed to copy: ", err);
     }
-  };
-
-  const handleDownloadQrCode = () => {
-    const download = createElement("a", {});
-    // const download = document.createElement("a");
-    // download.href = qrCode;
-    // download.download = "politician-qr";
-    // download.click();
-  };
+  }, [userStripeId]);
 
   return (
     <>
       <Flex justifyContent="justify-between">
         <h2>Profile</h2>
         <Link
-          href={"https://staging.linktome.xyz/politician/acct_1OgAOzEZcwACFEpu"}
+          href={`https://staging.linktome.xyz/politician/${userStripeId}`}
           target="_blank"
         >
           <Button variant="secondary">Preview profile</Button>
@@ -70,7 +77,7 @@ export default function ProfilePage() {
         <List className=" col-span-1 sm:col-span-4 order-2 sm:order-1">
           <Card label="Your unique URL" className="gap-6">
             <span className="bg-[rgba(255,255,255,0.05)] p-3 rounded-xl">
-              linktome.xyz/politician/radzi
+              {`linktome.xyz/politician/${userStripeId}`}
             </span>
             <Button
               onClick={handleCopyURL}

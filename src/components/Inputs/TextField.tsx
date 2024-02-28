@@ -12,7 +12,7 @@ import classNames from "classnames";
 
 interface TextFieldProps<T extends FieldValues>
   extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   name: Path<T>;
   register: UseFormRegister<T>;
   required?: boolean;
@@ -47,18 +47,20 @@ export function TextField<TValue extends FieldValues>({
               },
             }),
           })}
-          className={classNames("peer mt-3")}
+          className={classNames("peer", label && "mt-3")}
         />
-        <label
-          className={classNames(
-            "absolute left-5",
-            "peer-focus:top-2 peer-focus:text-xs",
-            "peer-valid:top-2 peer-valid:text-xs",
-            "peer-disabled:top-2 peer-disabled:text-xs peer-disabled:opacity-50"
-          )}
-        >
-          {label}
-        </label>
+        {label && (
+          <label
+            className={classNames(
+              "absolute left-5",
+              "peer-focus:top-2 peer-focus:text-xs",
+              "peer-valid:top-2 peer-valid:text-xs",
+              "peer-disabled:top-2 peer-disabled:text-xs peer-disabled:opacity-50"
+            )}
+          >
+            {label}
+          </label>
+        )}
       </Flex>
       {errors?.message && (
         <Text className="absolute text-start text-xs mx-5 text-[rgb(239,68,68)] w-full">
