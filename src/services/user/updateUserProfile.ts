@@ -14,7 +14,10 @@ export interface UserProfileInputForm {
   uniqueUrl: string;
 }
 
-export async function updateUserProfile({ username }: UserProfileInputForm) {
+export async function updateUserProfile({
+  uniqueUrl,
+  ...rest
+}: UserProfileInputForm) {
   const session = await getSession();
   const userId = session?.user?.attributes.find(
     ({ Name }) => Name === "sub"
@@ -22,17 +25,14 @@ export async function updateUserProfile({ username }: UserProfileInputForm) {
 
   const axiosInstance = axios.create({
     baseURL: "https://api.linktome.xyz",
+    headers: { Authorization: `Bearer ${session?.user?.idToken}` },
   });
 
-  // const { status } = await axiosInstance.put(`/user/${userId}/update`, {
-  //   password: { new: newPassword, old: oldPassword },
-  //   username,
-  //   firstTime,
-  // });
+  const { data } = await axiosInstance.put(`/user/${userId}/update`, {
+    ...rest,
+  });
 
-  // if (status === 201) {
-  //   return;
-  // }
+  console.log("data", data);
 
-  return;
+  return data;
 }

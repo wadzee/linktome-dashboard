@@ -8,7 +8,7 @@ interface TermsAndConditionProps {
 
 export function TermsAndCondition({ next }: TermsAndConditionProps) {
   return (
-    <List gap="gap-4" className="gap-8">
+    <List gap="gap-4" className="gap-8 mb-8">
       <h3>Please accept our Terms and Conditions to continue</h3>
       <p className="text-light-navy">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in augue

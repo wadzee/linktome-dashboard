@@ -1,8 +1,13 @@
+import {
+  UserProfileInputForm,
+  updateUserProfile,
+} from "src/services/user/updateUserProfile";
+
+import { Button } from "src/components/Button/Button";
 import { List } from "src/components/List/List";
 import { SelectField } from "src/components/Inputs/SelectField";
 import { Text } from "src/components/Text/Text";
 import { TextField } from "src/components/Inputs/TextField";
-import { UserProfileInputForm } from "src/services/user/updateUserProfile";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
@@ -56,20 +61,19 @@ export function ProfileCreation({ next }: ProfileCreationProps) {
   } = useForm<UserProfileInputForm>({
     defaultValues: {
       uniqueUrl: "https://staging.linktome.xyz/politician",
+      image: "profile.png",
     },
   });
 
   const onSubmit = async (input: UserProfileInputForm) => {
-    // try {
-    //   await updateUserProfile({
-    //     newPassword: input.newPassword,
-    //     firstTime: true,
-    //     username,
-    //   });
-    //   next();
-    // } catch (err) {
-    //   console.log("err", err);
-    // }
+    try {
+      await updateUserProfile({
+        ...input,
+      });
+      next();
+    } catch (err) {
+      console.log("err", err);
+    }
   };
 
   return (
@@ -140,16 +144,17 @@ export function ProfileCreation({ next }: ProfileCreationProps) {
             rows={5}
           />
         </List>
-        <List>
+        {/* <List className="mb-8">
           <Text>Profile Image</Text>
           <div
             {...getRootProps()}
-            className="h-[200px] w-full sm:w-[200px] border border-dotted rounded-2xl"
+            className="h-[200px] w-full sm:w-[200px] border border-dotted rounded-2xl flex justify-center items-center"
           >
             <input {...getInputProps()} />
-            <Text>+</Text>
+            <span>+</span>
           </div>
-        </List>
+        </List> */}
+        <Button type="submit">Done</Button>
       </List>
     </form>
   );
