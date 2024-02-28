@@ -1,12 +1,8 @@
-import {
-  UserProfileInputForm,
-  updateUserProfile,
-} from "src/services/user/updateUserProfile";
-
 import { List } from "src/components/List/List";
 import { SelectField } from "src/components/Inputs/SelectField";
 import { Text } from "src/components/Text/Text";
 import { TextField } from "src/components/Inputs/TextField";
+import { UserProfileInputForm } from "src/services/user/updateUserProfile";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
