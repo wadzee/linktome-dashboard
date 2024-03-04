@@ -5,10 +5,6 @@ declare module "next-auth" {
     id: string;
     idToken: string;
     accessToken: string;
-    attributes: Array<{
-      Name: "given_name" | "custom:isAdmin" | "custom:stripeId" | "sub";
-      Value: string;
-    }>;
   }
 
   interface Session extends DefaultSession {
@@ -21,9 +17,5 @@ declare module "next-auth/jwt" {
     id: string;
     idToken: string;
     accessToken: string;
-    attributes: Array<{
-      Name: "given_name" | "custom:isAdmin" | "custom:stripeId" | "sub";
-      Value: string;
-    }>;
   }
 }

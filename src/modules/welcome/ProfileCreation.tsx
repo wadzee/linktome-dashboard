@@ -8,9 +8,12 @@ import { List } from "src/components/List/List";
 import { SelectField } from "src/components/Inputs/SelectField";
 import { Text } from "src/components/Text/Text";
 import { TextField } from "src/components/Inputs/TextField";
-import { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
+import { TextAreaField } from "src/components/Inputs/TextAreaField";
+import { ImageInput } from "src/components/Inputs/ImageInput";
+import { useContext, useState } from "react";
+import { updateProfileImage } from "src/services/user/uploadProfileImage";
+import { userContext } from "src/context/UserProvider";
 
 const Party = {
   Malaysia: [
@@ -48,37 +51,50 @@ interface ProfileCreationProps {
 }
 
 export function ProfileCreation({ next }: ProfileCreationProps) {
-  const onDrop = useCallback(() => {}, []);
-
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
-    onDrop,
-  });
-
+  const data = useContext(userContext);
+  const [file, setFile] = useState<File>();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, defaultValues },
+    setValue,
+    watch,
   } = useForm<UserProfileInputForm>({
     defaultValues: {
-      uniqueUrl: "https://staging.linktome.xyz/politician",
-      image: "profile.png",
+      uniqueUrl: "https://staging.linktome.xyz/politician/",
     },
   });
 
+  const firstNameField = watch("firstName")?.toLowerCase();
+  const lastNameField = watch("lastName")?.toLowerCase();
+
   const onSubmit = async (input: UserProfileInputForm) => {
     try {
-      await updateUserProfile({
+      const s3SignedUrl = await updateUserProfile({
+        idToken: data?.idToken!,
+        userId: data?.userId!,
+        email: data?.email!,
         ...input,
       });
+
+      if (s3SignedUrl && file) {
+        await updateProfileImage({ preSignedUrl: s3SignedUrl, image: file });
+      }
+
       next();
     } catch (err) {
       console.log("err", err);
     }
   };
 
+  const handleImageUpload = (image: File) => {
+    setValue("image", image.name);
+    setFile(image);
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <List>
+    <form onSubmit={handleSubmit(onSubmit)} className="mb-8">
+      <List gap="gap-4">
         <h3>Complete your profile</h3>
         <Text className="text-light-navy">
           Fill out the below details to finalise your profile. You can update
@@ -103,6 +119,7 @@ export function ProfileCreation({ next }: ProfileCreationProps) {
           <Text>Unique URL</Text>
           <TextField<UserProfileInputForm>
             name="uniqueUrl"
+            value={defaultValues?.uniqueUrl! + firstNameField + lastNameField}
             register={register}
             disabled
             errors={errors.lastName}
@@ -135,26 +152,25 @@ export function ProfileCreation({ next }: ProfileCreationProps) {
             errors={errors.lastName}
           />
         </List>
-        <List>
-          <Text>About</Text>
-          <textarea
-            name="About"
-            placeholder="Tell your audience a bit about yourself..."
-            className="textfield resize-none !bg-transparent"
+        <List gap="gap-4">
+          <TextAreaField<UserProfileInputForm>
+            label="About"
+            name="about"
+            register={register}
             rows={5}
+            placeholder="Tell your audience a bit about yourself..."
+            className="resize-none bg-transparent"
           />
         </List>
-        {/* <List className="mb-8">
-          <Text>Profile Image</Text>
-          <div
-            {...getRootProps()}
-            className="h-[200px] w-full sm:w-[200px] border border-dotted rounded-2xl flex justify-center items-center"
-          >
-            <input {...getInputProps()} />
-            <span>+</span>
-          </div>
-        </List> */}
-        <Button type="submit">Done</Button>
+        <ImageInput
+          label="Profile image"
+          className="w-[150px] h-[150px]"
+          onImageUploaded={handleImageUpload}
+          customFilename="image"
+        />
+        <Button type="submit" className="mb-4">
+          Done
+        </Button>
       </List>
     </form>
   );

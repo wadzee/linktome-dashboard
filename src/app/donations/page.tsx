@@ -4,49 +4,47 @@ import {
   TransactionsResponse,
   getUserTransactions,
 } from "src/services/stripe/getTransactions";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import { Card } from "src/components/Card/Card";
 import { ConvertEpochToDate } from "src/utils";
 import { Flex } from "src/components/Flex/Flex";
 import { Grid3Cols } from "src/components/Grid/Grid3Cols";
-import Image from "next/image";
 import { List } from "src/components/List/List";
 import { Text } from "src/components/Text/Text";
-import { useSession } from "next-auth/react";
+import { UserContext, userContext } from "src/context/UserProvider";
 
 export default function DonationPage() {
+  const data = useContext(userContext);
   const [transactions, setTransactions] = useState<TransactionsResponse>();
-  const { data: sessionData } = useSession();
 
-  const getTransactions = useCallback(async () => {
-    const data = await getUserTransactions();
-    if (data) {
-      setTransactions(data);
+  const getTransactions = useCallback(async (userData: UserContext) => {
+    const response = await getUserTransactions(
+      userData.idToken,
+      userData.stripeId
+    );
+    if (response) {
+      setTransactions(response);
     }
   }, []);
 
   useEffect(() => {
-    getTransactions();
-  }, [getTransactions]);
-
-  const username = useMemo(() => {
-    return sessionData?.user?.attributes?.find(
-      ({ Name }) => Name === "given_name"
-    )?.Value;
-  }, [sessionData]);
+    if (data && data.stripeId) {
+      getTransactions(data);
+    }
+  }, [data, getTransactions]);
 
   return (
     <>
-      <h2>Hi, {username}</h2>
+      <h2>Hi, {data?.name}</h2>
       <Grid3Cols className="gap-6">
         <Card label="Funds raised">
           <h2>${transactions?.fundRaised || 0}</h2>
         </Card>
         <Card label="Next payment">
           <Flex>
-            <h2>{transactions?.balance}</h2>
-            <List gap="gap-0">
+            <h2>{transactions?.balance || 0}</h2>
+            {/* <List gap="gap-0">
               <Flex gap="gap-2">
                 <Image
                   src="/uptrend.svg"
@@ -57,7 +55,7 @@ export default function DonationPage() {
                 <Text>3%</Text>
               </Flex>
               <Text>since last week</Text>
-            </List>
+            </List> */}
           </Flex>
         </Card>
         <Card label="No. of donations">
@@ -83,6 +81,14 @@ export default function DonationPage() {
           </List>
         );
       })}
+      {!transactions?.data.length && (
+        <List
+          className="text-sm w-full pb-4 border-b border-dashed"
+          gap="gap-2"
+        >
+          <Text>You have zero transaction</Text>
+        </List>
+      )}
     </>
   );
 }

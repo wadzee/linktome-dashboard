@@ -24,10 +24,10 @@ const handler = NextAuth({
         try {
           const response = await signInUser(params);
           const user = {
-            id: response.username,
+            id: response.id,
+            username: response.username,
             idToken: response.idToken,
             accessToken: response.accessToken,
-            attributes: response.attributes,
           };
           return user;
         } catch (error) {

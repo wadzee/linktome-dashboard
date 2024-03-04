@@ -1,10 +1,5 @@
 import classNames from "classnames";
-
-interface IconProps {
-  className?: string;
-  width?: number;
-  height?: number;
-}
+import { IconProps } from "./type";
 
 export const TickIcon = ({ className, width, height }: IconProps) => {
   return (

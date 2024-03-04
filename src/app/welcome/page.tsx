@@ -1,6 +1,6 @@
 "use client";
 
-import { redirect, useSearchParams } from "next/navigation";
+import { RedirectType, useRouter, useSearchParams } from "next/navigation";
 
 import { CreateAPassword } from "src/modules/welcome/CreateAPassword";
 import Image from "next/image";
@@ -8,7 +8,7 @@ import Link from "next/link";
 import { List } from "src/components/List/List";
 import { ProfileCreation } from "src/modules/welcome/ProfileCreation";
 import { TermsAndCondition } from "src/modules/welcome/TermsAndCondition";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 enum STAGES {
   TNC = 1,
@@ -17,15 +17,21 @@ enum STAGES {
 }
 
 export default function WelcomePage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const username = searchParams.get("email");
+  const nextStage = searchParams.get("nextStage");
   const [stage, setStage] = useState<STAGES>(STAGES.TNC);
 
-  console.log("username", username);
+  useEffect(() => {
+    if (nextStage) {
+      setStage(STAGES[nextStage as keyof typeof STAGES]);
+    }
+  }, [nextStage]);
 
   const onNext = (accept = true) => {
     if (!accept) {
-      redirect("/");
+      router.replace("/");
     }
 
     switch (stage) {
@@ -36,7 +42,7 @@ export default function WelcomePage() {
         setStage(STAGES.PROFILE_CREATION);
         break;
       case STAGES.PROFILE_CREATION:
-        redirect("/");
+        router.replace("/");
       default:
         setStage(STAGES.TNC);
     }

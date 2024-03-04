@@ -1,38 +1,34 @@
 import axios from "axios";
-import { getSession } from "next-auth/react";
+import { UserProfile } from "./type";
 
-export interface UserProfileInputForm {
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  country: string;
-  party: string;
-  role: string;
-  about: string;
-  image: string;
+export interface UserProfileInputForm
+  extends Omit<Partial<UserProfile>, "email"> {
   uniqueUrl: string;
+}
+
+interface UserProfileUpdateResponse {
+  data: {
+    preSignedUrl: string;
+  };
 }
 
 export async function updateUserProfile({
   uniqueUrl,
+  idToken,
+  userId,
   ...rest
-}: UserProfileInputForm) {
-  const session = await getSession();
-  const userId = session?.user?.attributes.find(
-    ({ Name }) => Name === "sub"
-  )?.Value;
-
+}: UserProfileInputForm & { idToken: string; userId: string; email?: string }) {
   const axiosInstance = axios.create({
     baseURL: "https://api.linktome.xyz",
-    headers: { Authorization: `Bearer ${session?.user?.idToken}` },
+    headers: { Authorization: `Bearer ${idToken}` },
   });
 
-  const { data } = await axiosInstance.put(`/user/${userId}/update`, {
-    ...rest,
-  });
+  const {
+    data: { preSignedUrl },
+  } = await axiosInstance.put<UserProfile, UserProfileUpdateResponse>(
+    `/user/${userId}/update`,
+    rest
+  );
 
-  console.log("data", data);
-
-  return data;
+  return preSignedUrl;
 }

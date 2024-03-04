@@ -12,6 +12,7 @@ import { TextField } from "src/components/Inputs/TextField";
 import { TickIcon } from "src/components/Icons/TickIcon";
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
 
 interface CreateAPasswordProps {
   username: string;
@@ -40,7 +41,12 @@ export function CreateAPassword({ username, next }: CreateAPasswordProps) {
         firstTime: true,
         username,
       });
-      next();
+
+      await signIn("credentials", {
+        username,
+        password: input.newPassword,
+        callbackUrl: window.location.href + "&nextStage=PROFILE_CREATION",
+      });
     } catch (err) {
       console.log("err", err);
     }

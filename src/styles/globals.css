@@ -141,10 +141,32 @@
     @apply border-brand-gray;
   }
 
+  .image-dropzone {
+    @apply flex;
+    @apply items-center;
+    @apply justify-center;
+    @apply p-12;
+    @apply border;
+    @apply border-brand-gray;
+    @apply rounded-2xl;
+    @apply border-dotted;
+    @apply cursor-pointer;
+  }
+
   .active-link {
     @apply underline;
     @apply decoration-2;
     @apply underline-offset-4;
     @apply decoration-secondary-dark;
+  }
+
+  .trash-icon {
+    @apply p-3;
+    @apply z-50;
+    @apply top-2;
+    @apply right-2;
+    @apply bg-brand-gray;
+    @apply bg-opacity-25;
+    @apply rounded-full;
   }
 }

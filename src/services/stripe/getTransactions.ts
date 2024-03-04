@@ -1,11 +1,6 @@
 "use client";
 
 import axios from "axios";
-import { getSession } from "next-auth/react";
-
-export interface TransactionProps {
-  startingAfter?: string;
-}
 
 export interface TransactionObject {
   amount: number;
@@ -21,15 +16,14 @@ export interface TransactionsResponse {
   fundRaised: number;
 }
 
-export async function getUserTransactions(props?: TransactionProps) {
-  const session = await getSession();
-  const stripeId = session?.user?.attributes.find(
-    ({ Name }) => Name === "custom:stripeId"
-  )?.Value;
-
+export async function getUserTransactions(
+  idToken: string,
+  stripeId: string,
+  startingAfter?: string
+) {
   const axiosInstance = axios.create({
     baseURL: "https://api.linktome.xyz",
-    headers: { Authorization: `Bearer ${session?.user?.idToken}` },
+    headers: { Authorization: `Bearer ${idToken}` },
   });
 
   try {
@@ -37,7 +31,9 @@ export async function getUserTransactions(props?: TransactionProps) {
       data: { ...rest },
     } = await axiosInstance.post<TransactionsResponse>(
       `/user/${stripeId}/transactions`,
-      props
+      {
+        startingAfter,
+      }
     );
 
     return {

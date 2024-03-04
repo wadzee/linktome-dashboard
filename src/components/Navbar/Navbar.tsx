@@ -37,6 +37,33 @@ const links = [
   //     alt: "account-logo",
   //   },
   // },
+  // {
+  //   label: "Dashboard",
+  //   link: "/dashboard",
+  //   image: {
+  //     src: "/nav-icons/account.svg",
+  //     alt: "dashboard-logo",
+  //   },
+  //   isAdminOnly: true,
+  // },
+  // {
+  //   label: "Users",
+  //   link: "/users",
+  //   image: {
+  //     src: "/nav-icons/account.svg",
+  //     alt: "users-logo",
+  //   },
+  //   isAdminOnly: true,
+  // },
+  // {
+  //   label: "Parties",
+  //   link: "/parties",
+  //   image: {
+  //     src: "/nav-icons/account.svg",
+  //     alt: "parties-logo",
+  //   },
+  //   isAdminOnly: true,
+  // },
 ];
 
 export const Navbar = () => {

@@ -6,14 +6,11 @@ export interface SignInFormProps {
 }
 
 interface SignInResponse {
+  id: string;
   username: string;
   idToken: string;
   accessToken: string;
   challenge: string;
-  attributes: Array<{
-    Name: "given_name" | "custom:isAdmin" | "custom:stripeId" | "sub";
-    Value: string;
-  }>;
 }
 
 export async function signInUser(props: SignInFormProps) {
