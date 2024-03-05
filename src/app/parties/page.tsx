@@ -156,7 +156,7 @@ export default function Parties() {
                       name={country.id}
                     />
                   ),
-                  linkedParties: country.parties?.length,
+                  linkedParties: country.parties?.length || 0,
                   active: renderAction(country.id, country.active),
                 };
               })
@@ -164,7 +164,7 @@ export default function Parties() {
                 return {
                   party: party?.label,
                   country: party?.country,
-                  member: party?.member || 1,
+                  member: party?.member || 0,
                   active: renderAction(party?.id, party?.active),
                 };
               })
