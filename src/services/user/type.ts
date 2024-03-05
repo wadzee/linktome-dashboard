@@ -7,4 +7,6 @@ export interface UserProfile {
   role: string;
   about: string;
   image: string;
+  id: string;
+  status: string;
 }

@@ -47,10 +47,17 @@ const Party = {
 };
 
 interface ProfileCreationProps {
+  title?: string;
+  description?: string;
   next: () => void;
 }
 
-export function ProfileCreation({ next }: ProfileCreationProps) {
+export function ProfileCreation({
+  title = "Complete your profile",
+  description = `Fill out the below details to finalise your profile. You can update
+  the details any time from your ‘Profile’ page.`,
+  next,
+}: ProfileCreationProps) {
   const data = useContext(userContext);
   const [file, setFile] = useState<File>();
   const {
@@ -95,11 +102,8 @@ export function ProfileCreation({ next }: ProfileCreationProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mb-8">
       <List gap="gap-4">
-        <h3>Complete your profile</h3>
-        <Text className="text-light-navy">
-          Fill out the below details to finalise your profile. You can update
-          the details any time from your ‘Profile’ page.
-        </Text>
+        <h3>{title}</h3>
+        <Text className="text-light-navy">{description}</Text>
         <List gap="gap-4">
           <Text>Name</Text>
           <TextField<UserProfileInputForm>
@@ -168,7 +172,7 @@ export function ProfileCreation({ next }: ProfileCreationProps) {
           onImageUploaded={handleImageUpload}
           customFilename="image"
         />
-        <Button type="submit" className="mb-4">
+        <Button type="submit" className="mb-4 sm:w-fit">
           Done
         </Button>
       </List>

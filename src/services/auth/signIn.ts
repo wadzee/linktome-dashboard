@@ -11,6 +11,7 @@ interface SignInResponse {
   idToken: string;
   accessToken: string;
   challenge: string;
+  isAdmin: boolean;
 }
 
 export async function signInUser(props: SignInFormProps) {

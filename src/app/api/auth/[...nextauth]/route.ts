@@ -28,6 +28,7 @@ const handler = NextAuth({
             username: response.username,
             idToken: response.idToken,
             accessToken: response.accessToken,
+            isAdmin: response.isAdmin,
           };
           return user;
         } catch (error) {

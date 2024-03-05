@@ -138,7 +138,6 @@ export function CreateAPassword({ username, next }: CreateAPasswordProps) {
           Next
         </Button>
       </form>
-      <Button onClick={next}>Skip</Button>
     </List>
   );
 }

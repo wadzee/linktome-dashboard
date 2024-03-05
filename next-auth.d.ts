@@ -5,6 +5,7 @@ declare module "next-auth" {
     id: string;
     idToken: string;
     accessToken: string;
+    isAdmin: boolean;
   }
 
   interface Session extends DefaultSession {
@@ -17,5 +18,6 @@ declare module "next-auth/jwt" {
     id: string;
     idToken: string;
     accessToken: string;
+    isAdmin: boolean;
   }
 }

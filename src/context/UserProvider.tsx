@@ -14,6 +14,7 @@ import {
 } from "src/services/user/getUserProfile";
 
 export interface UserContext extends UserProfileResponse {
+  isAdmin: boolean;
   accessToken: string;
   idToken: string;
   userId: string;
@@ -47,6 +48,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   return (
     <userContext.Provider
       value={{
+        isAdmin: !!data?.user?.isAdmin,
         name: `${userData?.firstName} ${userData?.lastName}`,
         accessToken: data?.user?.accessToken || "",
         idToken: data?.user?.idToken || "",

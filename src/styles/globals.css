@@ -99,7 +99,6 @@
     @apply opacity-50;
     @apply cursor-not-allowed;
   }
-
   select {
     @apply w-full;
     @apply bg-transparent;
@@ -109,6 +108,41 @@
   select option {
     @apply bg-transparent;
     @apply mt-12;
+  }
+
+  table {
+    @apply max-w-screen-sm;
+    @apply sm:max-w-none;
+    @apply w-full;
+  }
+
+  td {
+    @apply capitalize;
+    @apply min-w-[200px];
+    @apply w-full;
+    @apply sm:w-auto;
+    @apply sm:min-w-full;
+  }
+
+  table > tbody > tr > td {
+    @apply px-6;
+    @apply py-4;
+  }
+
+  table > thead > tr > th {
+    @apply text-left;
+    @apply px-6;
+    @apply py-4;
+  }
+
+  th:first-child {
+    @apply rounded-tl-full;
+    @apply rounded-bl-full;
+  }
+
+  th:last-child {
+    @apply rounded-tr-full;
+    @apply rounded-br-full;
   }
 }
 
@@ -156,8 +190,21 @@
   .active-link {
     @apply underline;
     @apply decoration-2;
-    @apply underline-offset-4;
+    @apply underline-offset-8;
     @apply decoration-secondary-dark;
+  }
+
+  .backdrop {
+    @apply fixed;
+    @apply h-screen;
+    @apply w-screen;
+    @apply left-0;
+    @apply top-0;
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+    @apply z-50;
+    background: rgba(0, 0, 0, 0.5);
   }
 
   .trash-icon {
