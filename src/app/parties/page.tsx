@@ -76,8 +76,10 @@ export default function Parties() {
   const fetchCountries = useCallback(async () => {
     const data = await getCountries();
 
-    const parties = data.map(({ parties }) => parties).flat();
-
+    const parties = data
+      .filter(({ parties }) => !!parties)
+      .map(({ parties }) => parties)
+      .flat();
     setParties(parties);
     setCountries(data);
   }, []);
@@ -154,16 +156,16 @@ export default function Parties() {
                       name={country.id}
                     />
                   ),
-                  linkedParties: country.parties.length,
+                  linkedParties: country.parties?.length,
                   active: renderAction(country.id, country.active),
                 };
               })
             : (parties || []).map((party) => {
                 return {
-                  party: party.label,
-                  country: party.country,
-                  member: party.member || 3,
-                  active: renderAction(party.id, party.active),
+                  party: party?.label,
+                  country: party?.country,
+                  member: party?.member || 3,
+                  active: renderAction(party?.id, party?.active),
                 };
               })
         }
