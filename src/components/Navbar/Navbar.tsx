@@ -84,7 +84,7 @@ export const Navbar = ({
       >
         <List className="w-full" alignItems="items-center">
           {links.map(({ image, link, isAdminOnly }, idx) => {
-            if (isAdminOnly !== user?.isAdmin) {
+            if (isAdminOnly === user?.isAdmin) {
               return null;
             }
 
@@ -147,7 +147,7 @@ export const Navbar = ({
           className="hidden h-full sm:flex"
         >
           <List className="overflow-hidden hidden sm:flex" gap="gap-6">
-            {links.map(({ label, link, isAdminOnly }, idx) => {
+            {links.map(({ label, link, isAdminOnly = false }, idx) => {
               const isActive = pathname.includes(link);
 
               if (isAdminOnly !== user?.isAdmin) {

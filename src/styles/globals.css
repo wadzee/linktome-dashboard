@@ -117,7 +117,6 @@
   }
 
   td {
-    @apply capitalize;
     @apply min-w-[200px];
     @apply w-full;
     @apply sm:w-auto;
