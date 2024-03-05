@@ -164,7 +164,7 @@ export default function Parties() {
                 return {
                   party: party?.label,
                   country: party?.country,
-                  member: party?.member || 3,
+                  member: party?.member || 1,
                   active: renderAction(party?.id, party?.active),
                 };
               })
