@@ -37,9 +37,9 @@ export function SelectField<TValue extends FieldValues>({
   return (
     <div className="relative">
       <Flex className={classNames("textfield", errors && "!border-red-500")}>
-        <select {...rest} {...register(name)}>
+        <select {...rest} {...register(name)} className="!bg-transparent">
           {options.map(({ label, value }, idx) => (
-            <option value={value} key={idx}>
+            <option value={value} key={idx} className="text-navy">
               {label}
             </option>
           ))}

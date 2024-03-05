@@ -63,7 +63,7 @@ export function ProfileCreation({
   const {
     register,
     handleSubmit,
-    formState: { errors, defaultValues },
+    formState: { errors, defaultValues, isSubmitting },
     setValue,
     watch,
   } = useForm<UserProfileInputForm>({
@@ -172,7 +172,11 @@ export function ProfileCreation({
           onImageUploaded={handleImageUpload}
           customFilename="image"
         />
-        <Button type="submit" className="mb-4 sm:w-fit">
+        <Button
+          type="submit"
+          className="mb-4 sm:w-fit"
+          isLoading={isSubmitting}
+        >
           Done
         </Button>
       </List>

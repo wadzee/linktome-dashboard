@@ -26,7 +26,7 @@ export function CreateAPassword({ username, next }: CreateAPasswordProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     watch,
   } = useForm<PasswordFormInput>({
     defaultValues: {
@@ -131,8 +131,12 @@ export function CreateAPassword({ username, next }: CreateAPasswordProps) {
         <Button
           type="submit"
           disabled={
-            !containMinimumLength || !containNumber || !containUppercaseLetter
+            !containMinimumLength ||
+            !containNumber ||
+            !containUppercaseLetter ||
+            isSubmitting
           }
+          isLoading={isSubmitting}
           className="w-full sm:w-fit"
         >
           Next

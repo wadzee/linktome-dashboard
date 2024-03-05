@@ -215,4 +215,12 @@
     @apply bg-opacity-25;
     @apply rounded-full;
   }
+
+  .links {
+    @apply font-bold;
+    @apply underline;
+    @apply decoration-2;
+    @apply decoration-secondary-dark;
+    @apply underline-offset-4;
+  }
 }
