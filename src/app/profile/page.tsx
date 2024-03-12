@@ -210,19 +210,21 @@ export default function ProfilePage() {
                 {isEditMode === EDIT_MODE.PROFILE_PICTURE ? "Cancel" : "Edit"}
               </Button>
             </Flex>
-            {data?.image && (
-              <ImageInput
-                src={`https://linktome-assets.s3.ap-southeast-1.amazonaws.com/${data?.userId}/${data?.image}`}
-                className="w-[300px] h-[300px]"
-                imageSize={{
-                  width: 300,
-                  height: 300,
-                }}
-                onImageUploaded={handleImageUpload}
-                customFilename="image"
-                allowEdit={isEditMode === EDIT_MODE.PROFILE_PICTURE}
-              />
-            )}
+            <ImageInput
+              src={
+                data?.image
+                  ? `https://linktome-assets.s3.ap-southeast-1.amazonaws.com/${data?.userId}/${data?.image}`
+                  : "/default_profile.png"
+              }
+              className="w-[300px] h-[300px]"
+              imageSize={{
+                width: 300,
+                height: 300,
+              }}
+              onImageUploaded={handleImageUpload}
+              customFilename="image"
+              allowEdit={isEditMode === EDIT_MODE.PROFILE_PICTURE}
+            />
             {isEditMode === EDIT_MODE.PROFILE_PICTURE && (
               <Button
                 type="submit"

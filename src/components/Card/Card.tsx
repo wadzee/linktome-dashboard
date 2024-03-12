@@ -4,7 +4,7 @@ import { Text } from "../Text/Text";
 import classNames from "classnames";
 
 interface CardProps {
-  label: string;
+  label?: string;
   children: ReactNode;
   order?: string | number;
   className?: string;
@@ -17,7 +17,9 @@ export const Card = ({ label, children, order, className }: CardProps) => {
       gap="gap-4"
     >
       {order && <Text>{order}.</Text>}
-      <Text className={classNames(order && "text-2xl")}>{label}</Text>
+      {label && (
+        <Text className={classNames(order && "text-2xl")}>{label}</Text>
+      )}
       {children}
     </List>
   );

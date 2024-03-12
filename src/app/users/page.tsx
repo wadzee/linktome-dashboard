@@ -3,11 +3,13 @@
 import classNames from "classnames";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "src/components/Button/Button";
+import { Card } from "src/components/Card/Card";
 import { Flex } from "src/components/Flex/Flex";
 import { EllipsisIcon } from "src/components/Icons";
+import { List } from "src/components/List/List";
 import { Table } from "src/components/Table/Table";
 import { Text } from "src/components/Text/Text";
 import { userContext } from "src/context/UserProvider";
@@ -69,6 +71,7 @@ const VerifiedHeader = [
 export default function UserPage() {
   const data = useContext(userContext);
   const [inviteUserMode, setInviteUserMode] = useState(false);
+  const [selectedId, setSelectedId] = useState<string>();
   const [users, setUsers] = useState<UserProfile[]>();
   const [filter, setFitler] = useState<"Unverified" | "Verified">("Unverified");
 
@@ -76,16 +79,30 @@ export default function UserPage() {
     redirect("/");
   }
 
-  const renderUnverifiedAction = useCallback((id: string, status: string) => {
-    return (
-      <Flex justifyContent="justify-between">
-        <Button disabled={status === "Verified"}>Verify</Button>
-        {/* <button>
-          <EllipsisIcon width={18} height={18} className="fill-light-navy" />
-        </button> */}
-      </Flex>
-    );
-  }, []);
+  const renderUnverifiedAction = useCallback(
+    (id: string, status: string) => {
+      return (
+        <Flex justifyContent="justify-between">
+          <Button disabled={status === "Verified"}>Verify</Button>
+          <div onClick={() => setSelectedId(id)} className="relative">
+            <EllipsisIcon width={18} height={18} className="fill-light-navy" />
+            {selectedId === id && (
+              <Card className="fixed right-24 z-50 bg-white text-navy">
+                <List gap="gap-2" alignItems="items-start">
+                  <button className="w-full text-start">Profile</button>
+                  <button className="w-full text-start">Reset password</button>
+                  <button className="w-full text-start">
+                    Delete permenantly
+                  </button>
+                </List>
+              </Card>
+            )}
+          </div>
+        </Flex>
+      );
+    },
+    [selectedId]
+  );
 
   const renderVerifiedAction = useCallback((id: string) => {
     return (
