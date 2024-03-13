@@ -30,6 +30,14 @@ const links = [
       alt: "profile-logo",
     },
   },
+  {
+    label: "Account",
+    link: "/account",
+    image: {
+      src: "/nav-icons/account.svg",
+      alt: "account-logo",
+    },
+  },
   // {
   //   label: "Dashboard",
   //   link: "/dashboard",
@@ -83,8 +91,8 @@ export const Navbar = ({
         )}
       >
         <List className="w-full" alignItems="items-center">
-          {links.map(({ image, link, isAdminOnly }, idx) => {
-            if (isAdminOnly === user?.isAdmin) {
+          {links.map(({ image, link, isAdminOnly = false }, idx) => {
+            if (isAdminOnly !== user?.isAdmin) {
               return null;
             }
 

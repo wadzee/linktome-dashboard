@@ -72,7 +72,7 @@ export default function ProfilePage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setValue,
   } = useForm<UserProfileInputForm>({
     defaultValues: {
@@ -84,7 +84,7 @@ export default function ProfilePage() {
 
   const generateQrCode = useCallback((username: string) => {
     QRCode.toDataURL(
-      `staging.linktome.xyz/politician/${username}`,
+      `linktome.xyz/politician/${username}`,
       {
         width: 512,
       },
@@ -106,7 +106,7 @@ export default function ProfilePage() {
   const handleCopyURL = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(
-        `staging.linktome.xyz/politician/${data?.username}`
+        `linktome.xyz/politician/${data?.username}`
       );
       setLinkCopied(true);
     } catch (err) {
@@ -121,6 +121,7 @@ export default function ProfilePage() {
         userId: data?.userId!,
         firstName: data?.firstName,
         lastName: data?.lastName,
+        username: data?.username,
         ...input,
       });
       setIsEditMode(EDIT_MODE.NONE);
@@ -154,7 +155,7 @@ export default function ProfilePage() {
       <Flex justifyContent="justify-between">
         <h2>Profile</h2>
         <Link
-          href={`https://staging.linktome.xyz/politician/${data?.username}`}
+          href={`https://linktome.xyz/politician/${data?.username}`}
           target="_blank"
         >
           <Button variant="secondary">Preview profile</Button>
@@ -230,6 +231,7 @@ export default function ProfilePage() {
                 type="submit"
                 className="w-fit h-fit mt-4"
                 onClick={handleSubmit(onSubmit)}
+                isLoading={isSubmitting}
               >
                 Save
               </Button>
@@ -282,7 +284,11 @@ export default function ProfilePage() {
                     register={register}
                     errors={errors.lastName}
                   />
-                  <Button type="submit" className="w-fit h-fit mt-4">
+                  <Button
+                    type="submit"
+                    className="w-fit h-fit mt-4"
+                    isLoading={isSubmitting}
+                  >
                     Save
                   </Button>
                 </List>
@@ -312,7 +318,11 @@ export default function ProfilePage() {
                   placeholder="Tell your audience a bit about yourself..."
                   className="resize-none bg-transparent"
                 />
-                <Button type="submit" className="w-fit h-fit mt-4">
+                <Button
+                  type="submit"
+                  className="w-fit h-fit mt-4"
+                  isLoading={isSubmitting}
+                >
                   Save
                 </Button>
               </form>

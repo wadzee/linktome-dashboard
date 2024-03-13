@@ -7,14 +7,16 @@ export interface PasswordFormInput {
 
 interface UpdateUserPasswordProps extends PasswordFormInput {
   firstTime?: boolean;
-  username: string;
+  username?: string;
+  accessToken?: string;
 }
 
 export async function updateUserPassword({
   newPassword,
   oldPassword,
-  firstTime,
+  firstTime = false,
   username,
+  accessToken,
 }: UpdateUserPasswordProps) {
   const axiosInstance = axios.create({
     baseURL: "https://api.linktome.xyz",
@@ -24,6 +26,7 @@ export async function updateUserPassword({
     password: { new: newPassword, old: oldPassword },
     username,
     firstTime,
+    accessToken,
   });
 
   if (status === 201) {

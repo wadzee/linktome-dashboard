@@ -2,7 +2,7 @@ import axios from "axios";
 import { UserProfile } from "../user/type";
 
 interface ListUsersResponse {
-  users: UserProfile[];
+  users: Array<UserProfile & { email: string }>;
   lastEvaluatedKey?: string;
 }
 

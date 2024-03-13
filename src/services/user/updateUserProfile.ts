@@ -1,8 +1,8 @@
 import axios from "axios";
 import { UserProfile } from "./type";
 
-export interface UserProfileInputForm
-  extends Omit<Partial<UserProfile>, "email"> {
+export interface UserProfileInputForm extends Partial<UserProfile> {
+  email?: string;
   uniqueUrl: string;
 }
 
@@ -17,7 +17,12 @@ export async function updateUserProfile({
   idToken,
   userId,
   ...rest
-}: UserProfileInputForm & { idToken: string; userId: string; email?: string }) {
+}: UserProfileInputForm & {
+  idToken: string;
+  userId: string;
+  email?: string;
+  username?: string;
+}) {
   const axiosInstance = axios.create({
     baseURL: "https://api.linktome.xyz",
     headers: { Authorization: `Bearer ${idToken}` },

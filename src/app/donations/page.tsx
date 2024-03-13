@@ -62,9 +62,9 @@ export default function DonationPage() {
           <h2>{transactions?.totalDonations || 0}</h2>
         </Card>
       </Grid3Cols>
-      <Card label="Graph">
+      {/* <Card label="Graph">
         <Text>Todo</Text>
-      </Card>
+      </Card> */}
       <Text>Transactions</Text>
       {transactions?.data.map(({ created, amount }, idx) => {
         return (

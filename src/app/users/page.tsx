@@ -72,7 +72,7 @@ export default function UserPage() {
   const data = useContext(userContext);
   const [inviteUserMode, setInviteUserMode] = useState(false);
   const [selectedId, setSelectedId] = useState<string>();
-  const [users, setUsers] = useState<UserProfile[]>();
+  const [users, setUsers] = useState<Array<UserProfile & { email: string }>>();
   const [filter, setFitler] = useState<"Unverified" | "Verified">("Unverified");
 
   if (!data?.isAdmin) {

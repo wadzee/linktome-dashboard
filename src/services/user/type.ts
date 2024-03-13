@@ -1,7 +1,6 @@
 export interface UserProfile {
   firstName: string;
   lastName: string;
-  email: string;
   country: string;
   party: string;
   role: string;
@@ -9,4 +8,5 @@ export interface UserProfile {
   image: string;
   id: string;
   status: string;
+  createdAt: string;
 }

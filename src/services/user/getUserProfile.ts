@@ -20,5 +20,10 @@ export async function getUserProfile(userId: string) {
     },
   });
 
-  return data;
+  const formatted: UserProfileResponse = {
+    ...data,
+    createdAt: new Date(data.createdAt).getFullYear().toString(),
+  };
+
+  return formatted;
 }

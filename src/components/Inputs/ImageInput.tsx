@@ -12,7 +12,7 @@ export interface ImageInputProps {
   src?: string;
   className?: string;
   customFilename?: string;
-  onImageUploaded: (file: File) => void;
+  onImageUploaded?: (file: File) => void;
   imageSize?: {
     width: number;
     height: number;
@@ -20,11 +20,13 @@ export interface ImageInputProps {
   allowEdit?: boolean;
 }
 
+const noop = () => {};
+
 export function ImageInput({
   label,
   src,
   className,
-  onImageUploaded,
+  onImageUploaded = noop,
   imageSize = {
     width: 160,
     height: 160,
@@ -78,12 +80,15 @@ export function ImageInput({
             alt="image-preview"
             width={imageSize.width}
             height={imageSize.height}
-            className="aspect-square object-cover rounded-2xl"
+            className={classNames(
+              "aspect-square object-cover rounded-2xl",
+              className
+            )}
           />
         </div>
       );
     },
-    [allowEdit, imageSize.height, imageSize.width]
+    [allowEdit, className, imageSize.height, imageSize.width]
   );
 
   return (

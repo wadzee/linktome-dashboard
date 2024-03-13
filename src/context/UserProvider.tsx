@@ -21,6 +21,7 @@ export interface UserContext extends UserProfileResponse {
   name: string;
   politicalStatement: string;
   refetch: () => void;
+  email?: string;
 }
 
 export const userContext = createContext<UserContext | undefined>(undefined);
@@ -29,6 +30,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const { data } = useSession();
   const [userData, setUserdata] = useState<UserProfileResponse>();
   const userId = data?.user?.id;
+  const email = data?.user?.username;
 
   const getUserDetails = useCallback(async (id: string) => {
     const response = await getUserProfile(id);
@@ -54,6 +56,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         idToken: data?.user?.idToken || "",
         userId: userId || "",
         politicalStatement: `${userData?.role} at ${userData?.country} for ${userData?.party}`,
+        email,
         refetch,
         ...userData!,
       }}
