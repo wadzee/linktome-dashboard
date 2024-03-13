@@ -3,6 +3,7 @@ import { UserProfile } from "../user/type";
 
 export interface InviteUserForm extends Partial<UserProfile> {
   uniqueUrl?: string;
+  email: string;
 }
 
 export interface InviteUserRequest extends Partial<UserProfile> {
