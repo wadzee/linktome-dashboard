@@ -34,8 +34,6 @@ export default function ProfilePage() {
   const data = useContext(userContext);
   const [isEditMode, setIsEditMode] = useState<EDIT_MODE>(EDIT_MODE.NONE);
 
-  console.log("data", data);
-
   const {
     register,
     handleSubmit,

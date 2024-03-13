@@ -31,6 +31,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const [userData, setUserdata] = useState<UserProfileResponse>();
   const userId = data?.user?.id;
   const email = data?.user?.username;
+  const isAdmin = data?.user?.isAdmin;
 
   const getUserDetails = useCallback(async (id: string) => {
     const response = await getUserProfile(id);
@@ -50,7 +51,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   return (
     <userContext.Provider
       value={{
-        isAdmin: !!data?.user?.isAdmin,
+        isAdmin: !!isAdmin,
         name: `${userData?.firstName} ${userData?.lastName}`,
         accessToken: data?.user?.accessToken || "",
         idToken: data?.user?.idToken || "",

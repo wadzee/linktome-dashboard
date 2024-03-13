@@ -62,7 +62,7 @@ export function ProfileAdminCreation({ next, onCancel }: ProfileCreationProps) {
     watch,
   } = useForm<InviteUserForm>({
     defaultValues: {
-      uniqueUrl: "linkto.me/politician/",
+      uniqueUrl: "linktome.xyz/politician/",
     },
   });
 

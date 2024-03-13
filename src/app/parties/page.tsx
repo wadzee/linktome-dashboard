@@ -67,6 +67,7 @@ export default function Parties() {
   const [countries, setCountries] = useState<Countries[]>();
   const [isAddPartyMode, setIsAddPartyMode] = useState(false);
   const [isAddCountryMode, setIsAddCountryMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [view, setView] = useState<"party" | "country">("party");
 
   if (!data?.isAdmin) {
@@ -82,6 +83,7 @@ export default function Parties() {
       .flat();
     setParties(parties);
     setCountries(data);
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -145,6 +147,7 @@ export default function Parties() {
         </Flex>
       </Flex>
       <Table
+        isLoading={isLoading}
         columns={view === "party" ? PartyHeader : CountryHeader}
         rows={
           view === "country"

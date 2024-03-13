@@ -1,10 +1,13 @@
-export const Spinner = () => {
+import { IconProps } from "./type";
+
+export const Spinner = ({ className, ...rest }: IconProps) => {
   return (
     <svg
-      className="animate-spin -ml-1 mr-3 h-5 w-5 text-navy"
+      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
+      {...rest}
     >
       <circle
         className="opacity-25"

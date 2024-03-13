@@ -3,7 +3,7 @@
 import classNames from "classnames";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "src/components/Button/Button";
 import { Card } from "src/components/Card/Card";
@@ -72,7 +72,10 @@ export default function UserPage() {
   const data = useContext(userContext);
   const [inviteUserMode, setInviteUserMode] = useState(false);
   const [selectedId, setSelectedId] = useState<string>();
-  const [users, setUsers] = useState<Array<UserProfile & { email: string }>>();
+  const [users, setUsers] = useState<Array<UserProfile & { email: string }>>(
+    []
+  );
+  const [isLoading, setIsLoading] = useState(true);
   const [filter, setFitler] = useState<"Unverified" | "Verified">("Unverified");
 
   if (!data?.isAdmin) {
@@ -127,6 +130,7 @@ export default function UserPage() {
   const fetchUserList = useCallback(async (token: string) => {
     const { users } = await getUserLists(token);
 
+    setIsLoading(false);
     setUsers(users);
   }, []);
 
@@ -172,8 +176,9 @@ export default function UserPage() {
         </Flex>
       </Flex>
       <Table
+        isLoading={isLoading}
         columns={filter === "Unverified" ? UnverifiedHeader : VerifiedHeader}
-        rows={(users || [])
+        rows={users
           ?.filter((user) => {
             if (filter === "Verified" && user.status === "Verified") {
               return user;
