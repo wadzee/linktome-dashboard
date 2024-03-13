@@ -110,7 +110,7 @@ export default function Parties() {
             "peer-checked:bg-secondary-dark after:w-5 after:h-5 peer-checked:after:translate-x-5",
             "after:bg-primary-dark after:rounded-full after:shadow-md after:duration-300"
           )}
-        ></span>
+        />
       </label>
     );
   }, []);
@@ -181,7 +181,7 @@ export default function Parties() {
           >
             <PartyCreation idToken={data.idToken} next={handleNext} />
             <div
-              className="rotate-45 absolute top-8 right-8"
+              className="rotate-45 absolute top-8 right-8 cursor-pointer"
               onClick={() => setIsAddPartyMode(false)}
             >
               <PlusIcon
@@ -201,7 +201,7 @@ export default function Parties() {
           >
             <CountryCreation idToken={data.idToken} next={handleNext} />
             <div
-              className="rotate-45 absolute top-8 right-8"
+              className="rotate-45 absolute top-8 right-8 cursor-pointer"
               onClick={() => setIsAddCountryMode(false)}
             >
               <PlusIcon
