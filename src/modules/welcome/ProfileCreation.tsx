@@ -68,7 +68,7 @@ export function ProfileCreation({
     watch,
   } = useForm<UserProfileInputForm>({
     defaultValues: {
-      uniqueUrl: "https://staging.linktome.xyz/politician/",
+      uniqueUrl: "https://linktome.xyz/politician/",
     },
   });
 

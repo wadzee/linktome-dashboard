@@ -14,7 +14,7 @@ export function TermsAndCondition({ next }: TermsAndConditionProps) {
       <p className="text-light-navy">
         By continuing, you agree to our{" "}
         <Link
-          href="https://staging.linktome.xyz/legals/privacy-policy"
+          href="https://linktome.xyz/legals/privacy-policy"
           target="_blank"
           className="links"
         >
@@ -22,7 +22,7 @@ export function TermsAndCondition({ next }: TermsAndConditionProps) {
         </Link>{" "}
         and{" "}
         <Link
-          href="https://staging.linktome.xyz/legals/tnc"
+          href="https://linktome.xyz/legals/tnc"
           target="_blank"
           className="links"
         >

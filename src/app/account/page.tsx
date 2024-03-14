@@ -103,15 +103,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <Flex justifyContent="justify-between">
-        <h2>Account</h2>
-        <Link
-          href={"https://staging.linktome.xyz/politician/acct_1OgAOzEZcwACFEpu"}
-          target="_blank"
-        >
-          <Button variant="secondary">Preview profile</Button>
-        </Link>
-      </Flex>
+      <h2>Account</h2>
       <section className="grid grid-cols-1 sm:grid-cols-12 gap-6 sm:gap-12 sm:w-4/5 sm:mx-auto sm:mt-20  ">
         <List className=" col-span-1 sm:col-span-4">
           <Card>
