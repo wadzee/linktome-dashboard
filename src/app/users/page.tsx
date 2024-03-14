@@ -235,7 +235,7 @@ export default function UserPage() {
               party: user.party,
               email: user.email,
               status: user.status,
-              action: renderUnverifiedAction(user.id, user.status),
+              // action: renderUnverifiedAction(user.id, user.status),
             };
           })}
       />
