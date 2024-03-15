@@ -82,6 +82,7 @@ export function ProfileCreation({
         userId: data?.userId!,
         email: data?.email!,
         firstSetup: true,
+        username: `${firstNameField?.toLowerCase()}${lastNameField?.toLocaleLowerCase()}`,
         ...input,
       });
 
