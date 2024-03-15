@@ -98,7 +98,9 @@ export default function Parties() {
   }, [fetchCountries]);
 
   const handleNext = () => {
-    toast.success("New Party Added");
+    toast.success(
+      view === "country" ? "New Countries Added" : "New Party Added"
+    );
     fetchCountries();
   };
 
