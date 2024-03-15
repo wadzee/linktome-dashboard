@@ -18,6 +18,7 @@ interface TextFieldProps<T extends FieldValues>
   required?: boolean;
   type?: HTMLInputTypeAttribute;
   errors?: FieldError;
+  minLength?: number;
 }
 
 export function TextField<TValue extends FieldValues>({
@@ -27,6 +28,7 @@ export function TextField<TValue extends FieldValues>({
   type = "text",
   errors,
   name,
+  minLength,
   ...rest
 }: TextFieldProps<TValue>) {
   return (
@@ -39,6 +41,13 @@ export function TextField<TValue extends FieldValues>({
           autoComplete="off"
           {...register(name, {
             required,
+            ...(minLength &&
+              minLength > 0 && {
+                minLength: {
+                  value: minLength,
+                  message: "Password should be at least 8 characters.",
+                },
+              }),
             ...(type === "email" && {
               pattern: {
                 value:
@@ -53,6 +62,7 @@ export function TextField<TValue extends FieldValues>({
           <label
             className={classNames(
               "absolute left-5",
+              "peer-invalid:top-2 peer-invalid:text-xs",
               "peer-focus:top-2 peer-focus:text-xs",
               "peer-valid:top-2 peer-valid:text-xs",
               "peer-disabled:top-2 peer-disabled:text-xs peer-disabled:opacity-50"

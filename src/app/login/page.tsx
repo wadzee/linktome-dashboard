@@ -9,11 +9,14 @@ import { SignInFormProps } from "src/services/auth/signIn";
 import { Text } from "src/components/Text/Text";
 import { TextField } from "src/components/Inputs/TextField";
 import classNames from "classnames";
-import { redirect } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const { status } = useSession();
+  const queryString = useSearchParams();
   const {
     register,
     handleSubmit,
@@ -34,6 +37,13 @@ export default function LoginPage() {
       redirect("/");
     }
   };
+
+  useEffect(() => {
+    const error = queryString.get("error");
+    if (error && error === "CredentialsSignin") {
+      toast.error("Invalid Username or Password", { position: "top-center" });
+    }
+  }, [queryString]);
 
   return (
     <div className="-mt-[56px] sm:mt-0 sm:-ml-[220px] h-full">
@@ -65,12 +75,14 @@ export default function LoginPage() {
             label="Email"
             name="username"
             register={register}
+            type="email"
             errors={errors.username}
           />
           <TextField<SignInFormProps>
             label="Password"
             name="password"
             type="password"
+            minLength={8}
             register={register}
             errors={errors.password}
           />
