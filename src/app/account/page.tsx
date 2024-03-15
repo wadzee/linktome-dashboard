@@ -1,12 +1,9 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-
 import { Button } from "src/components/Button/Button";
 import { Card } from "src/components/Card/Card";
-import { Flag } from "src/components/Flag/Flag";
 import { Flex } from "src/components/Flex/Flex";
-import Link from "next/link";
 import { List } from "src/components/List/List";
 import { Text } from "src/components/Text/Text";
 import { ImageInput } from "src/components/Inputs/ImageInput";
@@ -21,7 +18,7 @@ import {
   PasswordFormInput,
   updateUserPassword,
 } from "src/services/auth/updateUserPassword";
-import { TextAreaField } from "src/components/Inputs/TextAreaField";
+import { toast } from "react-toastify";
 
 enum EDIT_MODE {
   EMAIL = "EMAIL",
@@ -59,6 +56,7 @@ export default function ProfilePage() {
     register: registerPassword,
     handleSubmit: handleSubmitPassword,
     formState: { errors: passwordError, isSubmitting: isSubmittingPassword },
+    reset,
   } = useForm<PasswordFormInput>();
 
   const handleEditMode = (mode: EDIT_MODE) => {
@@ -78,9 +76,13 @@ export default function ProfilePage() {
       });
       setIsEditMode(EDIT_MODE.NONE);
 
+      toast.success("Password changed succesfully!", {
+        position: "top-center",
+      });
       data?.refetch();
     } catch (err) {
-      console.log("err", err);
+      toast.error("Invalid password", { position: "top-center" });
+      reset();
     }
   };
   const onSubmit = async (input: UserProfileInputForm) => {

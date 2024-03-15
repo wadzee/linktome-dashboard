@@ -164,7 +164,7 @@ export default function ProfilePage() {
       <section className="grid grid-cols-1 sm:grid-cols-12 sm:gap-12 sm:w-4/5 sm:mx-auto sm:mt-20  ">
         <List className=" col-span-1 sm:col-span-4 order-2 sm:order-1">
           <Card label="Your unique URL" className="gap-6">
-            <span className="bg-[rgba(255,255,255,0.05)] p-3 rounded-xl">
+            <span className="bg-[rgba(255,255,255,0.05)] p-3 rounded-xl break-words">
               {`linktome.xyz/politician/${data?.username}`}
             </span>
             <Button
