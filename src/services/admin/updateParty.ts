@@ -2,7 +2,7 @@ import axios from "axios";
 import { Parties } from "./getCountries";
 
 export interface PartyInputForm
-  extends Pick<Parties, "active" | "label" | "country"> {}
+  extends Partial<Pick<Parties, "active" | "label" | "country" | "id">> {}
 
 export interface UpdatePartiesRequest extends PartyInputForm {
   idToken: string;

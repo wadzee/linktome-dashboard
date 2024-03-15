@@ -81,7 +81,7 @@ export default function ProfilePage() {
       });
       data?.refetch();
     } catch (err) {
-      toast.error("Invalid password", { position: "top-center" });
+      toast.error("Invalid password");
       reset();
     }
   };
@@ -95,6 +95,12 @@ export default function ProfilePage() {
         username: data?.username,
         ...input,
       });
+      toast.success(
+        `${
+          isEditMode === EDIT_MODE.EMAIL ? "Email" : `User's Name`
+        } updated succesfully!`,
+        { position: "top-center" }
+      );
       setIsEditMode(EDIT_MODE.NONE);
 
       data?.refetch();

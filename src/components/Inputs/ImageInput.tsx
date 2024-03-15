@@ -59,7 +59,7 @@ export function ImageInput({
     if (src) {
       setImage(src);
     }
-  }, [src]);
+  }, [src, allowEdit]);
 
   const renderImage = useCallback(
     (src: string) => {

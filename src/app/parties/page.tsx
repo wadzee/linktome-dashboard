@@ -2,14 +2,19 @@
 
 import classNames from "classnames";
 import { redirect } from "next/navigation";
-import { useCallback, useContext, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { toast } from "react-toastify";
 import { Button } from "src/components/Button/Button";
 import { Card } from "src/components/Card/Card";
 import { Flag } from "src/components/Flag/Flag";
 import { Flex } from "src/components/Flex/Flex";
 import { PlusIcon } from "src/components/Icons";
-import { SelectField } from "src/components/Inputs/SelectField";
 import { Table } from "src/components/Table/Table";
 import { userContext } from "src/context/UserProvider";
 import { CountryCreation } from "src/modules/Admin/CountryCreation";
@@ -19,6 +24,8 @@ import {
   Parties,
   getCountries,
 } from "src/services/admin/getCountries";
+import { updateCountry } from "src/services/admin/updateCountry";
+import { updateParties } from "src/services/admin/updateParty";
 
 const PartyHeader = [
   {
@@ -90,30 +97,60 @@ export default function Parties() {
     fetchCountries();
   }, [fetchCountries]);
 
-  const handleNext = (back?: boolean) => {
+  const handleNext = () => {
     toast.success("New Party Added");
     fetchCountries();
   };
 
-  const renderAction = useCallback((id: string, active: boolean) => {
-    return (
-      <label className="relative">
-        <input
-          type="checkbox"
-          className="peer appearance-none hidden"
-          defaultChecked={active}
-        />
-        <span
-          className={classNames(
-            "w-12 h-6 flex items-center flex-shrink-0 p-1",
-            "bg-light-navy rounded-full duration-300 ease-in-out",
-            "peer-checked:bg-secondary-dark after:w-5 after:h-5 peer-checked:after:translate-x-5",
-            "after:bg-primary-dark after:rounded-full after:shadow-md after:duration-300"
-          )}
-        />
-      </label>
-    );
-  }, []);
+  const handleChange = useCallback(
+    async (value: boolean, id: string) => {
+      try {
+        if (view === "country") {
+          await updateCountry({ idToken: data.idToken, active: value, id });
+        } else {
+          await updateParties({
+            idToken: data.idToken,
+            active: value,
+            id,
+          });
+        }
+
+        toast.success(
+          `Success! ${view === "country" ? "Country" : "Party"} is now ${
+            value ? "enabled" : "disabled"
+          }.`
+        );
+        fetchCountries();
+      } catch (err) {
+        toast.error("Something went wrong, please try again.");
+      }
+    },
+    [data.idToken, fetchCountries, view]
+  );
+
+  const renderAction = useCallback(
+    (id: string, active: boolean) => {
+      return (
+        <label className="relative">
+          <input
+            type="checkbox"
+            className="peer appearance-none hidden"
+            defaultChecked={active}
+            onChange={({ target }) => handleChange(target.checked, id)}
+          />
+          <span
+            className={classNames(
+              "w-12 h-6 flex items-center flex-shrink-0 p-1",
+              "bg-light-navy rounded-full duration-300 ease-in-out",
+              "peer-checked:bg-secondary-dark after:w-5 after:h-5 peer-checked:after:translate-x-5",
+              "after:bg-primary-dark after:rounded-full after:shadow-md after:duration-300"
+            )}
+          />
+        </label>
+      );
+    },
+    [handleChange]
+  );
 
   return (
     <div className="relative">

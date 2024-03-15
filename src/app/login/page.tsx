@@ -41,7 +41,7 @@ export default function LoginPage() {
   useEffect(() => {
     const error = queryString.get("error");
     if (error && error === "CredentialsSignin") {
-      toast.error("Invalid Username or Password", { position: "top-center" });
+      toast.error("Invalid Username or Password");
     }
   }, [queryString]);
 

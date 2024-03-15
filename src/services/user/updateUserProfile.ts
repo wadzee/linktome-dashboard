@@ -22,6 +22,7 @@ export async function updateUserProfile({
   userId: string;
   email?: string;
   username?: string;
+  firstSetup?: boolean;
 }) {
   const axiosInstance = axios.create({
     baseURL: "https://api.linktome.xyz",

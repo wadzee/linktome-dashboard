@@ -81,6 +81,7 @@ export function ProfileCreation({
         idToken: data?.idToken!,
         userId: data?.userId!,
         email: data?.email!,
+        firstSetup: true,
         ...input,
       });
 

@@ -22,6 +22,7 @@ import { SelectField } from "src/components/Inputs/SelectField";
 import { TextField } from "src/components/Inputs/TextField";
 import { ImageInput } from "src/components/Inputs/ImageInput";
 import { updateProfileImage } from "src/services/user/uploadProfileImage";
+import { toast } from "react-toastify";
 
 const Party = {
   Malaysia: [
@@ -72,13 +73,14 @@ export default function ProfilePage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, defaultValues },
     setValue,
   } = useForm<UserProfileInputForm>({
     defaultValues: {
       role: data?.role,
       party: data?.party,
       country: data?.country,
+      about: data?.about,
     },
   });
 
@@ -129,6 +131,8 @@ export default function ProfilePage() {
       if (s3SignedUrl && file) {
         await updateProfileImage({ preSignedUrl: s3SignedUrl, image: file });
       }
+
+      toast.success(`Success!`);
 
       data?.refetch();
     } catch (err) {
@@ -269,7 +273,7 @@ export default function ProfilePage() {
                         label: "Malaysia",
                         value: "Malaysia",
                       },
-                      { label: "New Zealand", value: "New Zealand" },
+                      { label: "New Zealand", value: "NewZealand" },
                       { label: "Australia", value: "Australia" },
                     ]}
                   />
@@ -315,6 +319,7 @@ export default function ProfilePage() {
                   name="about"
                   register={register}
                   rows={5}
+                  defaultValue={defaultValues?.about}
                   placeholder="Tell your audience a bit about yourself..."
                   className="resize-none bg-transparent"
                 />

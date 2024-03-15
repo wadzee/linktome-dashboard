@@ -30,7 +30,7 @@ export default function Main({ children }: PropsWithChildren) {
       >
         {children}
         <ToastContainer
-          position="bottom-center"
+          position="top-center"
           autoClose={2000}
           hideProgressBar
           newestOnTop={false}

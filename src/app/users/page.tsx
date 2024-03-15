@@ -87,7 +87,7 @@ export default function UserPage() {
       return (
         <Flex justifyContent="justify-between">
           <Button disabled={status === "Verified"}>Verify</Button>
-          <div onClick={() => setSelectedId(id)} className="relative">
+          {/* <div onClick={() => setSelectedId(id)} className="relative">
             <EllipsisIcon width={18} height={18} className="fill-light-navy" />
             {selectedId === id && (
               <Card className="fixed right-24 z-50 bg-white text-navy">
@@ -100,7 +100,7 @@ export default function UserPage() {
                 </List>
               </Card>
             )}
-          </div>
+          </div> */}
         </Flex>
       );
     },
@@ -235,7 +235,7 @@ export default function UserPage() {
               party: user.party,
               email: user.email,
               status: user.status,
-              // action: renderUnverifiedAction(user.id, user.status),
+              action: renderUnverifiedAction(user.id, user.status),
             };
           })}
       />
