@@ -6,6 +6,10 @@ const handler = NextAuth({
   pages: {
     signIn: "/login",
   },
+  session: {
+    strategy: "jwt",
+    maxAge: 1 * 60 * 60, // 1 hour
+  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
