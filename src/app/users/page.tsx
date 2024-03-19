@@ -82,12 +82,11 @@ export default function UserPage() {
     redirect("/");
   }
 
-  const renderUnverifiedAction = useCallback(
-    (id: string, status: string) => {
-      return (
-        <Flex justifyContent="justify-between">
-          <Button disabled={status === "Verified"}>Verify</Button>
-          {/* <div onClick={() => setSelectedId(id)} className="relative">
+  const renderUnverifiedAction = useCallback((id: string, status: string) => {
+    return (
+      <Flex justifyContent="justify-between">
+        <Button disabled={status === "Verified"}>Verify</Button>
+        {/* <div onClick={() => setSelectedId(id)} className="relative">
             <EllipsisIcon width={18} height={18} className="fill-light-navy" />
             {selectedId === id && (
               <Card className="fixed right-24 z-50 bg-white text-navy">
@@ -101,11 +100,9 @@ export default function UserPage() {
               </Card>
             )}
           </div> */}
-        </Flex>
-      );
-    },
-    [selectedId]
-  );
+      </Flex>
+    );
+  }, []);
 
   const renderVerifiedAction = useCallback((id: string) => {
     return (
